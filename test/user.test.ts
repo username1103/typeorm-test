@@ -86,6 +86,31 @@ describe("영속성 테스트", () => {
       // then
       expect(user === savedUser).toBe(false);
     });
+
+    test("같은 트랜잭션에서 같은 select 쿼리를 날리는 경우, 가져온 엔티티는 서로 다른가", async () => {
+      // given
+      const user = new User();
+      user.name = "test";
+      user.age = 12;
+      await UserRepository.save(user);
+
+      // when
+      const qr = DataSource.createQueryRunner();
+
+      await qr.startTransaction();
+
+      const savedUser = await qr.manager
+        .withRepository(UserRepository)
+        .findOneBy({ id: user.id });
+      const savedUser2 = await qr.manager
+        .withRepository(UserRepository)
+        .findOneBy({ id: user.id });
+
+      await qr.commitTransaction();
+
+      // then
+      expect(savedUser2 === savedUser).toBe(false);
+    });
   });
 
   describe("연관관계 관련 테스트", () => {
