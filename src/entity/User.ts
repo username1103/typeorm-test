@@ -4,18 +4,20 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+  Index,
 } from "typeorm";
+import { Team } from "./Team";
 
 @Entity()
+@Index("idx_user_1", ["team"])
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  firstName: string;
-
-  @Column()
-  lastName: string;
+  name: string;
 
   @Column()
   age: number;
@@ -25,4 +27,8 @@ export class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @ManyToOne(() => Team, { lazy: true, createForeignKeyConstraints: false })
+  @JoinColumn({ name: "team_id", referencedColumnName: "id" })
+  team: Promise<Team>;
 }
