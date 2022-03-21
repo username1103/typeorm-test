@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Director } from "./Director";
 
 @Entity()
 export class Team {
@@ -7,4 +8,7 @@ export class Team {
 
   @Column()
   name: string;
+
+  @OneToOne(() => Director, { lazy: true, cascade: ["insert"] })
+  director: Promise<Director>;
 }

@@ -1,7 +1,9 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
+import { Director } from "./entity/Director";
 import { Team } from "./entity/Team";
 import { User } from "./entity/User";
+import { UserRemoveCascade } from "./entity/UserRemoveCascade";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -12,7 +14,8 @@ export const AppDataSource = new DataSource({
   database: "test",
   synchronize: true,
   logging: true,
-  entities: [User, Team],
+  dropSchema: true,
+  entities: [User, Team, UserRemoveCascade, Director],
   migrations: [],
   subscribers: [],
 });

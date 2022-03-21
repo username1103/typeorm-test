@@ -28,7 +28,7 @@ export class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne(() => Team, { lazy: true, createForeignKeyConstraints: false })
+  @ManyToOne(() => Team, { lazy: true, cascade: true })
   @JoinColumn({ name: "team_id", referencedColumnName: "id" })
   team: Promise<Team>;
 }
