@@ -19,16 +19,17 @@ export class User {
   @Column()
   name: string;
 
-  @Column()
-  age: number;
-
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToOne(() => Team, { lazy: true, cascade: true })
-  @JoinColumn({ name: "team_id", referencedColumnName: "id" })
+  @ManyToOne(() => Team, (team) => team.user, {
+    lazy: true,
+    cascade: true,
+    persistence: true,
+  })
+  @JoinColumn({ name: "team_id" })
   team: Promise<Team>;
 }

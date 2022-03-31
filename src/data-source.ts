@@ -18,4 +18,12 @@ export const AppDataSource = new DataSource({
   entities: [User, Team, UserRemoveCascade, Director],
   migrations: [],
   subscribers: [],
+  cache: {
+    type: "redis",
+    options: {
+      host: "localhost",
+      port: 6379,
+    },
+    ignoreErrors: true,
+  },
 });

@@ -27,7 +27,6 @@ describe("영속성 테스트", () => {
       // given
       const user = new User();
       user.name = "myeongil";
-      user.age = 28;
 
       // when
       await UserRepository.save(user);
@@ -40,7 +39,6 @@ describe("영속성 테스트", () => {
       // given
       const user = new User();
       user.name = "myeongil";
-      user.age = 28;
 
       // when
       await UserRepository.insert(user);
@@ -53,7 +51,6 @@ describe("영속성 테스트", () => {
       // given
       const user = new User();
       user.name = "test";
-      user.age = 12;
 
       // when
       await UserRepository.save(user);
@@ -68,7 +65,6 @@ describe("영속성 테스트", () => {
       // given
       const user = new User();
       user.name = "test";
-      user.age = 12;
 
       // when
       // 같은 트랜잭션에서 save후 select하더라도 새롭게 쿼리가 나감.
@@ -91,7 +87,6 @@ describe("영속성 테스트", () => {
       // given
       const user = new User();
       user.name = "test";
-      user.age = 12;
       await UserRepository.save(user);
 
       // when
@@ -121,7 +116,6 @@ describe("영속성 테스트", () => {
       await TeamRepository.save(team);
       const user = new User();
       user.name = "test";
-      user.age = 13;
       user.team = Promise.resolve(team);
       await UserRepository.save(user);
       const savedUser = await UserRepository.findOneBy({ id: user.id });
@@ -137,7 +131,6 @@ describe("영속성 테스트", () => {
       team.name = "test";
       const user = new User();
       user.name = "kim";
-      user.age = 15;
       user.team = Promise.resolve(team);
       // when
       await UserRepository.insert(user);
@@ -150,7 +143,6 @@ describe("영속성 테스트", () => {
       team.name = "test";
       const user = new User();
       user.name = "kim";
-      user.age = 15;
       user.team = Promise.resolve(team);
       // when
       await UserRepository.save(user);
@@ -163,7 +155,6 @@ describe("영속성 테스트", () => {
       team.name = "test";
       const user = new User();
       user.name = "kim";
-      user.age = 15;
       user.team = Promise.resolve(team);
       await UserRepository.save(user);
       // when
@@ -176,7 +167,6 @@ describe("영속성 테스트", () => {
     test('cascade = ["insert"]일때, save시 연관객체가 연쇄적으로 저장되는가', async () => {
       // given
       const user = new User();
-      user.age = 15;
       user.name = "test";
 
       const team = new Team();
