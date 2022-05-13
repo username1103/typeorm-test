@@ -2,7 +2,9 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { Director } from "./entity/Director";
 import { Team } from "./entity/Team";
+import { TeamNoRelation } from "./entity/TeamNoRelation";
 import { User } from "./entity/User";
+import { UserNoRelation } from "./entity/UserNoRelation";
 import { UserRemoveCascade } from "./entity/UserRemoveCascade";
 
 export const AppDataSource = new DataSource({
@@ -15,7 +17,14 @@ export const AppDataSource = new DataSource({
   synchronize: true,
   logging: false,
   dropSchema: true,
-  entities: [User, Team, UserRemoveCascade, Director],
+  entities: [
+    User,
+    Team,
+    UserRemoveCascade,
+    Director,
+    UserNoRelation,
+    TeamNoRelation,
+  ],
   migrations: [],
   subscribers: [],
   // cache: {
