@@ -11,14 +11,17 @@ describe("영속성 테스트", () => {
   let TeamRepository: Repository<Team>;
   let UserRemoveCascadeRepository: Repository<UserRemoveCascade>;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     DataSource = await AppDataSource.initialize();
+  });
+
+  beforeEach(async () => {
     UserRepository = DataSource.getRepository(User);
     TeamRepository = DataSource.getRepository(Team);
     UserRemoveCascadeRepository = DataSource.getRepository(UserRemoveCascade);
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await DataSource.destroy();
   });
 

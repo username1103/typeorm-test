@@ -13,17 +13,17 @@ export const AppDataSource = new DataSource({
   password: "test",
   database: "test",
   synchronize: true,
-  logging: true,
+  logging: false,
   dropSchema: true,
   entities: [User, Team, UserRemoveCascade, Director],
   migrations: [],
   subscribers: [],
-  cache: {
-    type: "redis",
-    options: {
-      host: "localhost",
-      port: 6379,
-    },
-    ignoreErrors: true,
-  },
+  // cache: {
+  //   type: "redis",
+  //   options: {
+  //     host: "localhost",
+  //     port: 6379,
+  //   },
+  //   ignoreErrors: true,
+  // },
 });

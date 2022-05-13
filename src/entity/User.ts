@@ -28,7 +28,6 @@ export class User {
   @ManyToOne(() => Team, (team) => team.user, {
     lazy: true,
     cascade: true,
-    persistence: true,
   })
   @JoinColumn({ name: "team_id" })
   team: Promise<Team>;
