@@ -10,7 +10,7 @@ import {
 } from "typeorm";
 import { Team } from "./Team";
 
-@Entity()
+@Entity({ name: "user" })
 @Index("idx_user_1", ["team"])
 export class User {
   @PrimaryGeneratedColumn()

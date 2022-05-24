@@ -27,7 +27,10 @@ PASS test/user.test.ts
 - ✓ cascade가 true이고 save시 연관객체가 자동으로 저장되는가 (169 ms)
 - ✓ cascade가 true이고 연관객체 수정후 save시 연관객체가 자동으로 수정되는가 (204 ms)
 - ✓ cascade = ["insert"]일때, save시 연관객체가 연쇄적으로 저장되는가 (196 ms)
-- ✕ cascade가 ['remove']이고 remove시 연관객체가 삭제되는가 (186 ms) -> 왜.. 안되지
+
+기타
+
+- ✓ 하나의 테이블을 여러 엔티티로 조회 가능한가 (19 ms) => 커맨드 엔티티와 쿼리 엔티티를 분리하여 설정할 수 있음.
 
 ---
 

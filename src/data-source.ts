@@ -4,6 +4,7 @@ import { Director } from "./entity/Director";
 import { Team } from "./entity/Team";
 import { TeamNoRelation } from "./entity/TeamNoRelation";
 import { User } from "./entity/User";
+import { UserEntity } from "./entity/UserEntity";
 import { UserNoRelation } from "./entity/UserNoRelation";
 import { UserRemoveCascade } from "./entity/UserRemoveCascade";
 
@@ -24,6 +25,7 @@ export const AppDataSource = new DataSource({
     Director,
     UserNoRelation,
     TeamNoRelation,
+    UserEntity,
   ],
   migrations: [],
   subscribers: [],

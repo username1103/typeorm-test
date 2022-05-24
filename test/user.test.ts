@@ -3,6 +3,7 @@ import { AppDataSource } from "../src/data-source";
 import { Director } from "../src/entity/Director";
 import { Team } from "../src/entity/Team";
 import { User } from "../src/entity/User";
+import { UserEntity } from "../src/entity/UserEntity";
 import { UserRemoveCascade } from "../src/entity/UserRemoveCascade";
 
 describe("영속성 테스트", () => {
@@ -10,6 +11,7 @@ describe("영속성 테스트", () => {
   let UserRepository: Repository<User>;
   let TeamRepository: Repository<Team>;
   let UserRemoveCascadeRepository: Repository<UserRemoveCascade>;
+  let UserEntityRepository: Repository<UserEntity>;
 
   beforeAll(async () => {
     DataSource = await AppDataSource.initialize();
@@ -19,6 +21,7 @@ describe("영속성 테스트", () => {
     UserRepository = DataSource.getRepository(User);
     TeamRepository = DataSource.getRepository(Team);
     UserRemoveCascadeRepository = DataSource.getRepository(UserRemoveCascade);
+    UserEntityRepository = DataSource.getRepository(UserEntity);
   });
 
   afterAll(async () => {
@@ -190,21 +193,42 @@ describe("영속성 테스트", () => {
       expect(team.id).toBeDefined();
       expect(director.id).toBeDefined();
     });
-    test("cascade가 ['remove']이고 remove시 연관객체가 삭제되는가", async () => {
+  });
+
+  describe("기타", () => {
+    // 커맨드 엔티티와 쿼리 엔티티를 구별할 수 있음 => 코드 작성이 편안해지지 않을까??
+    test("하나의 테이블을 여러 엔티티로 조회 가능한가", async () => {
       // given
       const team = new Team();
       team.name = "test";
       await TeamRepository.save(team);
-      const user = new UserRemoveCascade();
+      const user = new UserEntity();
       user.name = "kim";
-      user.team = Promise.resolve(team);
-      await UserRemoveCascadeRepository.save(user);
-      expect(team.id).toBeDefined();
+      user.teamId = team.id;
+      await UserEntityRepository.save(user);
+
       // when
-      await UserRemoveCascadeRepository.remove(user);
+      const getUser = await UserRepository.findOneBy({ id: user.id });
+      const getUserEntity = await UserEntityRepository.findOneBy({
+        id: user.id,
+      });
+
       // then
-      const savedTeam = await TeamRepository.findOneBy({ id: team.id });
-      expect(savedTeam).toBeUndefined();
+      expect(getUser).toMatchObject({
+        id: user.id,
+        name: "kim",
+      });
+      expect(getUserEntity).toMatchObject({
+        id: user.id,
+        name: "kim",
+        teamId: team.id,
+      });
+
+      const getTeam = await getUser.team;
+      expect(getTeam).toMatchObject({
+        id: team.id,
+        name: "test",
+      });
     });
   });
 });
